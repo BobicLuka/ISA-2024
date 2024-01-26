@@ -46,8 +46,8 @@ public class User implements UserDetails {
     private String firstName;
 
     @Column(name = "last_name")
-    private String lastName;
-
+    private String lastName;			
+    										
     @Column(name = "email")
     private String email;
 
@@ -72,8 +72,24 @@ public class User implements UserDetails {
 	@Column(name = "penaltyPoints")
 	private int penaltyPoints;
 	
+	 @Column(name = "city")
+	    private String city;		
 	
-	
+	 @Column(name = "country")
+	    private String country;	
+	 
+	 @Column(name = "phone_number")
+	    private String phoneNumber;	
+	 
+	 @Column(name = "profession")
+	    private String profession;	
+	 
+	 @Column(name = "company_info")
+	    private String companyInfo;	
+	 
+	 @Column(name = "activation_code")
+	    private String activationCode;	
+	 
     public Long getId() {
         return id;
     }
@@ -172,5 +188,73 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public int getPenaltyPoints() {
+		return penaltyPoints;
+	}
+
+	public void setPenaltyPoints(int penaltyPoints) {
+		this.penaltyPoints = penaltyPoints;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(String companyInfo) {
+		this.companyInfo = companyInfo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getActivationCode() {
+		return activationCode;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
+	}
 
 }

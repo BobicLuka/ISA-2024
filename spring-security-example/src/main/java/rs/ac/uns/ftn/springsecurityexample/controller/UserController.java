@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.springsecurityexample.dto.CompanyDTO;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.service.UserService;
 
@@ -48,10 +49,18 @@ public class UserController {
 		return this.userService.findByUsername(user.getName());
 	}
 	
-	@GetMapping("/foo")
-    public Map<String, String> getFoo() {
-        Map<String, String> fooObj = new HashMap<>();
-        fooObj.put("foo", "bar");
-        return fooObj;
-    }
+	
+    @GetMapping("/activateAccount/{activationCode}")
+	    public String verifyUser(@PathVariable String activationCode)  {
+
+	        if (userService.activateAccount(activationCode)) {
+	            return "<div class=\"container text-center\">\n" +
+	                    "    <h3>Your account is successfully activated!</h3>\n" +
+	                    "</div>";
+	        } else {
+	            return "<div class=\"container text-center\">\n" +
+	                    "    <h3>This activation link is not valid.</h3>\n" +
+	                    "</div>";
+	        }
+	    }
 }

@@ -6,5 +6,6 @@ import rs.ac.uns.ftn.springsecurityexample.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+    User findByActivationCode(String activationCode);
 }
 
