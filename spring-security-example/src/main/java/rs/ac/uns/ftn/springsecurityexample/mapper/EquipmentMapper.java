@@ -19,12 +19,6 @@ import rs.ac.uns.ftn.springsecurityexample.model.Equipment;
 
 public class EquipmentMapper {
 	
-	private Long id;
-	private String name;
-	private double price;
-	private Company company;
-	
-	
 	public static EquipmentDTO toDTO(Equipment entity) {
 		EquipmentDTO dto = new EquipmentDTO();
 		dto.setId(entity.getId());
@@ -32,7 +26,6 @@ public class EquipmentMapper {
 		dto.setPrice(entity.getPrice());
 		dto.setCompanyId(entity.getCompany().getId());
 		dto.setCompanyName(entity.getCompany().getName());
-
 		return dto;
 	}
 	

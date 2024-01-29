@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.springsecurityexample.dto;
 
-import rs.ac.uns.ftn.springsecurityexample.model.Company;
-
 public class CompanyDTO {
 	private Long id;
 	private String name;

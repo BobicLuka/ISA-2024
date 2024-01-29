@@ -16,14 +16,15 @@ import rs.ac.uns.ftn.springsecurityexample.dto.CompanyDTO;
 import rs.ac.uns.ftn.springsecurityexample.mapper.CompanyMapper;
 import rs.ac.uns.ftn.springsecurityexample.model.Company;
 import rs.ac.uns.ftn.springsecurityexample.service.CompanyService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping(value = "api/company", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
-
-
 public class CompanyController {
 
 	@Autowired
@@ -37,13 +38,13 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/search/{name}")
-	public List<CompanyDTO> searchByName(@PathVariable String name) {
+	public ResponseEntity<List<CompanyDTO>> searchByName(@PathVariable String name) {
 		 List<Company> companies = this.companyService.searchByName(name);
 		 List<CompanyDTO> dtos = new ArrayList<>();
 		 for (Company company : companies) {
 			 dtos.add(CompanyMapper.toDTO(company));
 		}
-		return dtos;
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
 	

@@ -25,6 +25,7 @@ import rs.ac.uns.ftn.springsecurityexample.model.Company;
 import rs.ac.uns.ftn.springsecurityexample.model.Role;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.repository.UserRepository;
+import rs.ac.uns.ftn.springsecurityexample.service.EmailService;
 import rs.ac.uns.ftn.springsecurityexample.service.RoleService;
 import rs.ac.uns.ftn.springsecurityexample.service.UserService;
 
@@ -39,6 +40,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private EmailService emailService;
+
 
 	@Override
 	public User findByUsername(String username) throws UsernameNotFoundException {
@@ -58,10 +63,7 @@ public class UserServiceImpl implements UserService {
 		User u = new User();
 		u.setUsername(userRequest.getUsername());
 
-		// pre nego sto postavimo lozinku u atribut hesiramo je kako bi se u bazi
-		// nalazila hesirana lozinka
-		// treba voditi racuna da se koristi isi password encoder bean koji je
-		// postavljen u AUthenticationManager-u kako bi koristili isti algoritam
+		//proveri checkPassword i password jesu iste
 		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
 		u.setFirstName(userRequest.getFirstname());
@@ -81,7 +83,12 @@ public class UserServiceImpl implements UserService {
 		u.setProfession(userRequest.getProfession());
 		u.setCompanyInfo(userRequest.getCompanyInfo());
 		u.setActivationCode(generateActivationCode());
+		sendActivationCode(u);
 		return this.userRepository.save(u);
+	}
+
+	private void sendActivationCode(User user) {
+		emailService.sendActivationCode(user);		
 	}
 
 	private static String generateActivationCode() {

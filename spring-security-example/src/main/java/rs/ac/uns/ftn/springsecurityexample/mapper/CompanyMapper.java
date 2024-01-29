@@ -16,12 +16,6 @@ public class CompanyMapper {
 		return dto;
 	}
 	
-	public static Company toEntity(CompanyDTO dto) {
-		Company entity = new Company();
-		dto.setDescription(entity.getDescription());
-		dto.setId(entity.getId());
-		dto.setName(entity.getName());
-		return entity;
-	}
+
 	
 }
