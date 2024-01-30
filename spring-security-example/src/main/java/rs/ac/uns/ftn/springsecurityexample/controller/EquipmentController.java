@@ -40,4 +40,14 @@ public class EquipmentController {
 		}
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
+	
+	@GetMapping("/search/{companyId}")
+	public ResponseEntity<List<EquipmentDTO>> searchByCompanyId(@PathVariable Long companyId) {
+		 List<Equipment> equipment = this.equipmentService.getAllByCompanyId(companyId);
+		 List<EquipmentDTO> dtos = new ArrayList<>();
+		 for (Equipment e : equipment) {
+			 dtos.add(EquipmentMapper.toDTO(e));
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
 }
