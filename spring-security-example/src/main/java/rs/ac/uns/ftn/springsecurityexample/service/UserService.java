@@ -11,4 +11,5 @@ public interface UserService {
     List<User> findAll ();
 	User save(UserRequest userRequest);
 	boolean activateAccount(String activationCode);
+	User saveUser(User user);
 }

@@ -101,4 +101,10 @@ public class Appointment {
 		this.user = user;
 	}
 
+
+	public String getQrCodeData() {
+		return "Appointment [id=" + id + ", startDate=" + startDate + ", duration=" + duration
+				+ ", equipmentId=" + equipment.getId() + ", administratorId=" + administrator.getId() + ", userId=" + user.getId() + "]";
+	}
+
 }

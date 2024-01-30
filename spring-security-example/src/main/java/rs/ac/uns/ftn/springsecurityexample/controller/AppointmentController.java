@@ -55,12 +55,20 @@ public class AppointmentController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 	
-	@PutMapping("/take/{appointmentId}/{userId}") // TODO: prilagoditi tokenima;
+	@PutMapping("/take/{appointmentId}/{equipmentId}/{userId}") // TODO: prilagoditi tokenima;
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<AppointmentDTO> takeAppointment(@PathVariable Long appointmentId,@PathVariable Long userId) {
-		Appointment appointment = this.appointmentService.takeAppointment(appointmentId, userId);
+	public ResponseEntity<AppointmentDTO> takeAppointment(@PathVariable Long appointmentId,@PathVariable Long equipmentId, @PathVariable Long userId) {
+		Appointment appointment = this.appointmentService.takeAppointment(appointmentId, equipmentId, userId);
 		AppointmentDTO dto = AppointmentMapper.toDTO(appointment);
 
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	@PutMapping("/cancel/{appointmentId}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<AppointmentDTO> cancelAppointment(@PathVariable Long appointmentId) {
+		Appointment appointment = this.appointmentService.cancelAppointment(appointmentId);
+		AppointmentDTO dto = AppointmentMapper.toDTO(appointment);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	

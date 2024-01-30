@@ -21,8 +21,9 @@ INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 2', 256.5, 1)
 INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 3', 256.5, 2);
 INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 4', 256.5, 3);
 
-INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-01-27 08:00:00', 60, 1, 2, NULL);
-INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (1, '2024-01-28 09:00:00', 60, 1, 2, 1);
-INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (2, '2024-01-24 09:00:00', 60, 1, 2, 1);
-INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (2, '2024-01-29 10:00:00', 60, 2, 2, 1);
-INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-01-29 10:00:00', 60, 2, 2, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-02-27 08:00:00', 60, 1, 2, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (1, '2024-02-28 09:00:00', 60, 1, 2, 1);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (2, '2024-02-24 09:00:00', 60, 1, 2, 1);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (2, '2024-02-29 10:00:00', 60, 2, 2, 1);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-02-29 10:00:00', 60, 2, 2, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (1, '2024-01-31 09:00:00', 60, 1, 2, 1);

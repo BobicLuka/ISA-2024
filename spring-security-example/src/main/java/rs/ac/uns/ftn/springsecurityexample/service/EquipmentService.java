@@ -15,7 +15,13 @@ public class EquipmentService {
 	@Autowired
 	protected EquipmentRepository repository;
 	
+	public Equipment getById(Long id) {
+		return repository.findById(id).orElse(null);
+	}
+	
 	public List<Equipment> searchByName(String name) {
 	    return repository.findByNameContainingIgnoreCase(name);
 	}
+	
+	
 }
