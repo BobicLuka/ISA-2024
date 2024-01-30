@@ -14,4 +14,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	List<Appointment> findByEquipmentId(Long equipmentId);
 	List<Appointment> findByEquipmentIdAndStatusInAndStartDateAfter(Long equipmentId, List<AppointmentStatus> statusList, LocalDateTime currentDate);
 	List<Appointment> findByUserIdAndStartDateAfter(Long userId, LocalDateTime currentDate);
+	List<Appointment> findByStatusInAndStartDateAfter(List<AppointmentStatus> statusList, LocalDateTime currentDate);
+
+
 }

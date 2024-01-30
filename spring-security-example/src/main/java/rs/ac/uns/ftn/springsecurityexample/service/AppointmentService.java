@@ -34,8 +34,8 @@ public class AppointmentService {
 		return repository.findByEquipmentId(equipmentId);
 	}
 
-	public List<Appointment> getFutureAvailableByEquipmentId(Long equipmentId) {
-		return new ArrayList<Appointment>(repository.findByEquipmentIdAndStatusInAndStartDateAfter(equipmentId,
+	public List<Appointment> getFutureAvailable() {
+		return new ArrayList<Appointment>(repository.findByStatusInAndStartDateAfter(
 				Arrays.asList(AppointmentStatus.SCHEDULED, AppointmentStatus.CANCELED), LocalDateTime.now()));
 	}
 
@@ -45,7 +45,7 @@ public class AppointmentService {
 		Equipment equipment = equipmentService.getById(equipmentId);
 		User user = userService.findById(userId);
 
-		if (canUserMakeAppointment(user, appointment) || appointment == null || user == null || equipment == null) {
+		if (!canUserMakeAppointment(user, appointment) || appointment == null || user == null || equipment == null) {
 			return null;
 		}
 
@@ -54,8 +54,9 @@ public class AppointmentService {
 			appointment.setStatus(AppointmentStatus.TAKEN);
 			appointment.setUser(user);
 			appointment.setEquipment(equipment);
+		}else {
+			return null;
 		}
-
 		Appointment reservedAppointment = repository.save(appointment);
 		try {
 			emailService.sendQrCode(user, reservedAppointment);
@@ -69,7 +70,7 @@ public class AppointmentService {
 		if (appointment.getStatus() != AppointmentStatus.CANCELED) {
 			return true;
 		}
-		return user.getId() == appointment.getUser().getId();
+		return user.getId() != appointment.getUser().getId();
 	}
 
 
@@ -99,4 +100,11 @@ public class AppointmentService {
 	public List<Appointment> getAllFutureAppointmentsForUser(Long userId) {
 		return repository.findByUserIdAndStartDateAfter(userId, LocalDateTime.now());
 	}
+	
+	/*
+	 public List<Appointment> getFutureAvailableByEquipmentId(Long equipmentId) {
+		return new ArrayList<Appointment>(repository.findByEquipmentIdAndStatusInAndStartDateAfter(equipmentId,
+				Arrays.asList(AppointmentStatus.SCHEDULED, AppointmentStatus.CANCELED), LocalDateTime.now()));
+	}
+	 */
 }

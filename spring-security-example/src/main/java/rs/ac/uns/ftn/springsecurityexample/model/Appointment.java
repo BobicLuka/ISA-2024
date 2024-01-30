@@ -34,7 +34,7 @@ public class Appointment {
 	private int duration;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "equipment_id", nullable = false)
+	@JoinColumn(name = "equipment_id", nullable = true)
 	private Equipment equipment;
 
 	@ManyToOne(fetch = FetchType.EAGER)

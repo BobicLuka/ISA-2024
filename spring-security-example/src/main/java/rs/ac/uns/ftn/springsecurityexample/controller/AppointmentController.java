@@ -32,35 +32,15 @@ public class AppointmentController {
 
 	@Autowired
 	private AppointmentService appointmentService;
-
-	@GetMapping("/equipment/{equipmentId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getByEquipmentId(@PathVariable Long equipmentId) {
-		List<Appointment> appointments = this.appointmentService.getByEquipmentId(equipmentId);
-		List<AppointmentDTO> dtos = new ArrayList<>();
-		for (Appointment appointment : appointments) {
-			dtos.add(AppointmentMapper.toDTO(appointment));
-		}
-		return new ResponseEntity<>(dtos, HttpStatus.OK);
-	}
-
-	@GetMapping("/available/equipment/{equipmentId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getFutureAvailableByEquipmentId(@PathVariable Long equipmentId) {
-		List<Appointment> appointments = this.appointmentService.getFutureAvailableByEquipmentId(equipmentId);
-		List<AppointmentDTO> dtos = new ArrayList<>();
-		for (Appointment appointment : appointments) {
-			dtos.add(AppointmentMapper.toDTO(appointment));
-		}
-		return new ResponseEntity<>(dtos, HttpStatus.OK);
-	}
 	
 	@PutMapping("/take/{appointmentId}/{equipmentId}/{userId}") // TODO: prilagoditi tokenima;
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<AppointmentDTO> takeAppointment(@PathVariable Long appointmentId,@PathVariable Long equipmentId, @PathVariable Long userId) {
 		Appointment appointment = this.appointmentService.takeAppointment(appointmentId, equipmentId, userId);
+		if(appointment == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 		AppointmentDTO dto = AppointmentMapper.toDTO(appointment);
-
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
@@ -68,6 +48,9 @@ public class AppointmentController {
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<AppointmentDTO> cancelAppointment(@PathVariable Long appointmentId) {
 		Appointment appointment = this.appointmentService.cancelAppointment(appointmentId);
+		if(appointment == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 		AppointmentDTO dto = AppointmentMapper.toDTO(appointment);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
@@ -82,6 +65,39 @@ public class AppointmentController {
 		}
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/available")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<AppointmentDTO>> getFutureAvailable() {
+		List<Appointment> appointments = this.appointmentService.getFutureAvailable();
+		List<AppointmentDTO> dtos = new ArrayList<>();
+		for (Appointment appointment : appointments) {
+			dtos.add(AppointmentMapper.toDTO(appointment));
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+/*
+	@GetMapping("/available/equipment/{equipmentId}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<AppointmentDTO>> getFutureAvailableByEquipmentId(@PathVariable Long equipmentId) {
+		List<Appointment> appointments = this.appointmentService.getFutureAvailableByEquipmentId(equipmentId);
+		List<AppointmentDTO> dtos = new ArrayList<>();
+		for (Appointment appointment : appointments) {
+			dtos.add(AppointmentMapper.toDTO(appointment));
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}*/
+	/*
+	@GetMapping("/equipment/{equipmentId}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<AppointmentDTO>> getByEquipmentId(@PathVariable Long equipmentId) {
+		List<Appointment> appointments = this.appointmentService.getByEquipmentId(equipmentId);
+		List<AppointmentDTO> dtos = new ArrayList<>();
+		for (Appointment appointment : appointments) {
+			dtos.add(AppointmentMapper.toDTO(appointment));
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}*/
 
 }
