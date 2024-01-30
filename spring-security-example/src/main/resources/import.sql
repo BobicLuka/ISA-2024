@@ -26,7 +26,7 @@ INSERT INTO COMPANY (name, description) VALUES ('Company 2', 'Desctription for C
 INSERT INTO COMPANY (name, description) VALUES ('Company 3', 'Desctription for Company 3');
 
 INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 1', 256.5, 1);
-INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 2', 256.5, 1);
+INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Eq 2', 256.5, 1);
 INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 3', 256.5, 2);
 INSERT INTO EQUIPMENT (name, price, company_id) VALUES ('Equipment 4', 256.5, 3);
 

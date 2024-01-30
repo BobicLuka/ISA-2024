@@ -19,8 +19,8 @@ public class EquipmentService {
 		return repository.findById(id).orElse(null);
 	}
 	
-	public List<Equipment> searchByName(String name) {
-	    return repository.findByNameContainingIgnoreCase(name);
+	public List<Equipment> searchByNameAndCompanyId(String name, Long companyId) {
+	    return repository.findByNameContainingIgnoreCaseAndCompanyId(name, companyId);
 	}
 	//getByCompanyId
 	//searchByNameAndCompanyId 

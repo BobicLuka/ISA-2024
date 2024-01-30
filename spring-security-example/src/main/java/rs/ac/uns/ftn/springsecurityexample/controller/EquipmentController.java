@@ -31,9 +31,9 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService equipmentService;
 	
-	@GetMapping("/search/{name}")
-	public ResponseEntity<List<EquipmentDTO>> searchByName(@PathVariable String name) {
-		 List<Equipment> equipment = this.equipmentService.searchByName(name);
+	@GetMapping("/search/{name}/{companyId}")
+	public ResponseEntity<List<EquipmentDTO>> searchByName(@PathVariable String name, @PathVariable Long companyId) {
+		 List<Equipment> equipment = this.equipmentService.searchByNameAndCompanyId(name, companyId);
 		 List<EquipmentDTO> dtos = new ArrayList<>();
 		 for (Equipment e : equipment) {
 			 dtos.add(EquipmentMapper.toDTO(e));
