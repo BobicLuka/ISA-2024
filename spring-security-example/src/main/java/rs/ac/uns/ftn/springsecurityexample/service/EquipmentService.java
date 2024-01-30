@@ -23,7 +23,6 @@ public class EquipmentService {
 	    return repository.findByNameContainingIgnoreCaseAndCompanyId(name, companyId);
 	}
 	//getByCompanyId
-	//searchByNameAndCompanyId 
 	
 	
 }
