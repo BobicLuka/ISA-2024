@@ -22,6 +22,8 @@ public class EquipmentService {
 	public List<Equipment> searchByName(String name) {
 	    return repository.findByNameContainingIgnoreCase(name);
 	}
+	//getByCompanyId
+	//searchByNameAndCompanyId 
 	
 	
 }

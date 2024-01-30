@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.springsecurityexample.model.Appointment;
+import rs.ac.uns.ftn.springsecurityexample.model.Complaint;
 import rs.ac.uns.ftn.springsecurityexample.model.Equipment;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.model.enums.AppointmentStatus;
@@ -54,7 +55,7 @@ public class AppointmentService {
 			appointment.setStatus(AppointmentStatus.TAKEN);
 			appointment.setUser(user);
 			appointment.setEquipment(equipment);
-		}else {
+		} else {
 			return null;
 		}
 		Appointment reservedAppointment = repository.save(appointment);
@@ -72,7 +73,6 @@ public class AppointmentService {
 		}
 		return user.getId() != appointment.getUser().getId();
 	}
-
 
 	public Appointment cancelAppointment(Long appointmentId) {
 		Appointment appointment = repository.findById(appointmentId).orElseGet(null);
@@ -100,11 +100,23 @@ public class AppointmentService {
 	public List<Appointment> getAllFutureAppointmentsForUser(Long userId) {
 		return repository.findByUserIdAndStartDateAfter(userId, LocalDateTime.now());
 	}
-	
-	/*
-	 public List<Appointment> getFutureAvailableByEquipmentId(Long equipmentId) {
-		return new ArrayList<Appointment>(repository.findByEquipmentIdAndStatusInAndStartDateAfter(equipmentId,
-				Arrays.asList(AppointmentStatus.SCHEDULED, AppointmentStatus.CANCELED), LocalDateTime.now()));
+
+	public boolean hadAppointmentWithAdmin(Long userId, Long adminId) {
+		List<Appointment> appointments = repository.findByUserIdAndAdministratorIdAndStartDateAfter(userId, adminId,
+				LocalDateTime.now());
+		return appointments.size() > 0;
 	}
+
+	public boolean hadAppointmentWithCompany(Long userId, Long companyId) {
+		List<Appointment> appointments = repository.findByUserIdAndEquipment_Company_IdAndStartDateAfter(userId, companyId,
+				LocalDateTime.now());
+		return appointments.size() > 0;
+	}
+	/*
+	 * public List<Appointment> getFutureAvailableByEquipmentId(Long equipmentId) {
+	 * return new ArrayList<Appointment>(repository.
+	 * findByEquipmentIdAndStatusInAndStartDateAfter(equipmentId,
+	 * Arrays.asList(AppointmentStatus.SCHEDULED, AppointmentStatus.CANCELED),
+	 * LocalDateTime.now())); }
 	 */
 }

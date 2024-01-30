@@ -67,6 +67,6 @@ public class AuthenticationController {
 
 		User user = this.userService.save(userRequest);
 
-		return new ResponseEntity<>(user, HttpStatus.CREATED);
+		return new ResponseEntity<>(null, HttpStatus.CREATED);
 	}
 }

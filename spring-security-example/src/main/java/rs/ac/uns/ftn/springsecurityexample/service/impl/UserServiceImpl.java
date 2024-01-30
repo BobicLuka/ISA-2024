@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	public User findById(Long id) throws AccessDeniedException {
-		return userRepository.findById(id).orElseGet(null);
+	public User findById(Long id) {
+		return userRepository.findById(id).orElse(null);
 	}
 
 	public List<User> findAll() throws AccessDeniedException {
