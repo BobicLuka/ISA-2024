@@ -14,6 +14,10 @@ INSERT INTO USERS (username, password, first_name, last_name, email, enabled, la
 INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date, penalty_points, city, country, phone_number, profession, company_info) VALUES ('system_admin1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Djura', 'Peric', 'system_admin@example.com', true, '2017-10-01 18:57:58.508-07', 0, 'Novi Sad', 'Srbija', '0601234567', 'programer',  'Company info');
 INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date, penalty_points, city, country, phone_number, profession, company_info) VALUES ('user2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Djura', 'Peric', 'bobicluka8899@gmail.com', true, '2017-10-01 18:57:58.508-07', 0, 'Novi Sad', 'Srbija', '0601234567', 'programer',  'Company info');
 
+INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date, penalty_points, company_id, city, country, phone_number, profession, company_info) VALUES ('admin_company2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Petar', 'Djuric', 'admin@example.com', true, '2017-10-01 18:57:58.508-07', 0, 2, 'Novi Sad', 'Srbija', '0601234567', 'programer',  'Company info');
+INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date, penalty_points, company_id, city, country, phone_number, profession, company_info) VALUES ('admin_company4', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Petar', 'Djuric', 'admin@example.com', true, '2017-10-01 18:57:58.508-07', 0, 4, 'Novi Sad', 'Srbija', '0601234567', 'programer',  'Company info');
+
+
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');			--registrovani korisnik
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');			--administrator kompanije
 INSERT INTO ROLE (name) VALUES ('ROLE_SYSTEM_ADMIN');	--administrator sistema
@@ -52,6 +56,16 @@ INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrat
 INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 09:00:00', 60, NULL, 5, NULL);
 INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 11:00:00', 60, NULL, 5, NULL);
 INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 13:00:00', 60, NULL, 5, NULL);
+
+
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 09:00:00', 60, NULL, 8, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 11:00:00', 60, NULL, 8, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 13:00:00', 60, NULL, 8, NULL);
+
+
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 09:00:00', 60, NULL, 9, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 11:00:00', 60, NULL, 9, NULL);
+INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (0, '2024-03-20 13:00:00', 60, NULL, 9, NULL);
 
 INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (1, '2024-01-31 09:00:00', 60, 1, 2, 1);
 INSERT INTO APPOINTMENT (status, start_date, duration, equipment_id, administrator_id, user_id) VALUES (1, '2024-01-31 12:00:00', 60, 4, 5, 4);
