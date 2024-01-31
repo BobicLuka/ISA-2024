@@ -47,6 +47,7 @@ public class UserController {
 	}
 
 	@GetMapping("user/allAdmins")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<UserDTO>> getAllAdmins() {
 		List<User> admins = this.userService.getAllAdmins();
 		List<UserDTO> dtos = new ArrayList<>();
@@ -59,22 +60,6 @@ public class UserController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
-	@GetMapping("/user/{userId}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public User loadById(@PathVariable Long userId) {
-		return this.userService.findById(userId);
-	}
-
-	@GetMapping("/user/all")
-	@PreAuthorize("hasRole('ADMIN')")
-	public List<User> loadAll() {
-		return this.userService.findAll();
-	}
-
-	@GetMapping("/whoami")
-	@PreAuthorize("hasRole('USER')")
-	public User user(Principal user) {
-		return this.userService.findByUsername(user.getName());
-	}
+	
 
 }
