@@ -66,10 +66,10 @@ public class AppointmentController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 	
-	@GetMapping("/available")
+	@GetMapping("/available/{companyId}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getFutureAvailable() {
-		List<Appointment> appointments = this.appointmentService.getFutureAvailable();
+	public ResponseEntity<List<AppointmentDTO>> getFutureAvailableByCompanyId(@PathVariable Long companyId) {
+		List<Appointment> appointments = this.appointmentService.getFutureAvailableByCompanyId(companyId);
 		List<AppointmentDTO> dtos = new ArrayList<>();
 		for (Appointment appointment : appointments) {
 			dtos.add(AppointmentMapper.toDTO(appointment));

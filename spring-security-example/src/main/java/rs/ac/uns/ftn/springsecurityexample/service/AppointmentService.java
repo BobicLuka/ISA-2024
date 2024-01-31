@@ -35,8 +35,8 @@ public class AppointmentService {
 		return repository.findByEquipmentId(equipmentId);
 	}
 
-	public List<Appointment> getFutureAvailable() {
-		return new ArrayList<Appointment>(repository.findByStatusInAndStartDateAfter(
+	public List<Appointment> getFutureAvailableByCompanyId(Long companyId) {
+		return new ArrayList<Appointment>(repository.findByAdministrator_Company_IdAndStatusInAndStartDateAfter(companyId,
 				Arrays.asList(AppointmentStatus.SCHEDULED, AppointmentStatus.CANCELED), LocalDateTime.now()));
 	}
 
