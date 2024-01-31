@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.springsecurityexample.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,9 @@ import rs.ac.uns.ftn.springsecurityexample.mapper.ComplaintResponseMapper;
 import rs.ac.uns.ftn.springsecurityexample.model.Company;
 import rs.ac.uns.ftn.springsecurityexample.model.Complaint;
 import rs.ac.uns.ftn.springsecurityexample.model.ComplaintResponse;
+import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.service.ComplaintService;
+import rs.ac.uns.ftn.springsecurityexample.service.UserService;
 
 @RestController
 @RequestMapping(value = "api/complaint", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,10 +40,14 @@ public class ComplaintController {
 	
 	@Autowired
 	private ComplaintService complaintService;
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping("")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<ComplaintDTO> create(@RequestBody ComplaintDTO complaintDTO) {
+	public ResponseEntity<ComplaintDTO> create(@RequestBody ComplaintDTO complaintDTO, Principal loggedUser) {
+		User user = this.userService.findByUsername(loggedUser.getName());
+		complaintDTO.setComplainantId(user.getId());
 		Complaint complaint = this.complaintService.create(complaintDTO);
 		if(complaint == null) {
 			return  new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -50,7 +57,9 @@ public class ComplaintController {
 	
 	@PostMapping("/response")
 	@PreAuthorize("hasRole('SYSTEM_ADMIN')")
-	public ResponseEntity<ComplaintResponseDTO> respond(@RequestBody ComplaintResponseDTO complaintResponseDTO) {
+	public ResponseEntity<ComplaintResponseDTO> respond(@RequestBody ComplaintResponseDTO complaintResponseDTO, Principal loggedUser) {
+		User user = this.userService.findByUsername(loggedUser.getName());
+		complaintResponseDTO.setSystemAdminId(user.getId());
 		ComplaintResponse complaintResponse = this.complaintService.respond(complaintResponseDTO);
 		if(complaintResponse == null) {
 			return  new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -69,10 +78,11 @@ public class ComplaintController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 	
-	@GetMapping("/forUser/{userId}")
+	@GetMapping("/forUser")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<ComplaintDTO>> getAllComplaintForUserId(@PathVariable Long userId) {
-		List<Complaint> complaints = this.complaintService.getAllForUserId(userId);
+	public ResponseEntity<List<ComplaintDTO>> getAllComplaintForUserId(Principal loggedUser) {
+		User user = this.userService.findByUsername(loggedUser.getName());
+		List<Complaint> complaints = this.complaintService.getAllForUserId(user.getId());
 		List<ComplaintDTO> dtos = new ArrayList<>();
 		for (Complaint complaint : complaints) {
 			dtos.add(ComplaintMapper.toDTO(complaint));

@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.springsecurityexample.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,10 @@ import rs.ac.uns.ftn.springsecurityexample.mapper.AppointmentMapper;
 import rs.ac.uns.ftn.springsecurityexample.mapper.CompanyMapper;
 import rs.ac.uns.ftn.springsecurityexample.model.Appointment;
 import rs.ac.uns.ftn.springsecurityexample.model.Company;
+import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.service.AppointmentService;
 import rs.ac.uns.ftn.springsecurityexample.service.CompanyService;
+import rs.ac.uns.ftn.springsecurityexample.service.UserService;
 
 @RestController
 @RequestMapping(value = "api/appointment", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,10 +36,14 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	@PutMapping("/take/{appointmentId}/{equipmentId}/{userId}") // TODO: prilagoditi tokenima;
+	@Autowired
+	private UserService userService;
+	
+	@PutMapping("/take/{appointmentId}/{equipmentId}") 
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<AppointmentDTO> takeAppointment(@PathVariable Long appointmentId,@PathVariable Long equipmentId, @PathVariable Long userId) {
-		Appointment appointment = this.appointmentService.takeAppointment(appointmentId, equipmentId, userId);
+	public ResponseEntity<AppointmentDTO> takeAppointment(@PathVariable Long appointmentId,@PathVariable Long equipmentId, Principal loggedUser) {
+		User user = this.userService.findByUsername(loggedUser.getName());
+		Appointment appointment = this.appointmentService.takeAppointment(appointmentId, equipmentId, user.getId());
 		if(appointment == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -51,14 +58,16 @@ public class AppointmentController {
 		if(appointment == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
+		
 		AppointmentDTO dto = AppointmentMapper.toDTO(appointment);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	@GetMapping("/allFutureForUser/{userId}") // TODO: prilagoditi tokenima;
+	@GetMapping("/allFutureForUser") 
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getAllFutureAppointmentsForUser(@PathVariable Long userId) {
-		List<Appointment> appointments = this.appointmentService.getAllFutureAppointmentsForUser(userId);
+	public ResponseEntity<List<AppointmentDTO>> getAllFutureAppointmentsForUser(Principal loggedUser) {
+		User user = this.userService.findByUsername(loggedUser.getName());
+		List<Appointment> appointments = this.appointmentService.getAllFutureAppointmentsForUser(user.getId());
 		List<AppointmentDTO> dtos = new ArrayList<>();
 		for (Appointment appointment : appointments) {
 			dtos.add(AppointmentMapper.toDTO(appointment));
