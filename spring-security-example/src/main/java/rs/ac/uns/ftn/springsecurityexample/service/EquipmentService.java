@@ -25,5 +25,7 @@ public class EquipmentService {
 	public List<Equipment> getAllByCompanyId(Long companyId) {
 	    return repository.findByCompanyId(companyId);
 	}
-	
+	public List<Equipment> searchByName(String name) {
+	    return repository.findByNameContainingIgnoreCase(name);
+	}
 }

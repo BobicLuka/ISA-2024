@@ -33,7 +33,7 @@ public class EquipmentController {
 	private EquipmentService equipmentService;
 	
 	@GetMapping("/search")
-	public ResponseEntity<List<EquipmentDTO>> searchByName(@RequestParam(name = "name", defaultValue = "") String name,
+	public ResponseEntity<List<EquipmentDTO>> searchByNameAndCompanyId(@RequestParam(name = "name", defaultValue = "") String name,
 		    @RequestParam(name = "companyId") Long companyId) {
 		 List<Equipment> equipment = this.equipmentService.searchByNameAndCompanyId(name, companyId);
 		 List<EquipmentDTO> dtos = new ArrayList<>();
@@ -43,9 +43,9 @@ public class EquipmentController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 	
-	@GetMapping("/search1/{companyId}")
-	public ResponseEntity<List<EquipmentDTO>> searchByCompanyId(@PathVariable Long companyId) {
-		 List<Equipment> equipment = this.equipmentService.getAllByCompanyId(companyId);
+	@GetMapping("/search/byName")
+	public ResponseEntity<List<EquipmentDTO>> searchByName(@RequestParam(name = "name", defaultValue = "") String name) {
+		 List<Equipment> equipment = this.equipmentService.searchByName(name);
 		 List<EquipmentDTO> dtos = new ArrayList<>();
 		 for (Equipment e : equipment) {
 			 dtos.add(EquipmentMapper.toDTO(e));
