@@ -85,28 +85,5 @@ public class AppointmentController {
 		}
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
-	
-/*
-	@GetMapping("/available/equipment/{equipmentId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getFutureAvailableByEquipmentId(@PathVariable Long equipmentId) {
-		List<Appointment> appointments = this.appointmentService.getFutureAvailableByEquipmentId(equipmentId);
-		List<AppointmentDTO> dtos = new ArrayList<>();
-		for (Appointment appointment : appointments) {
-			dtos.add(AppointmentMapper.toDTO(appointment));
-		}
-		return new ResponseEntity<>(dtos, HttpStatus.OK);
-	}*/
-	/*
-	@GetMapping("/equipment/{equipmentId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<AppointmentDTO>> getByEquipmentId(@PathVariable Long equipmentId) {
-		List<Appointment> appointments = this.appointmentService.getByEquipmentId(equipmentId);
-		List<AppointmentDTO> dtos = new ArrayList<>();
-		for (Appointment appointment : appointments) {
-			dtos.add(AppointmentMapper.toDTO(appointment));
-		}
-		return new ResponseEntity<>(dtos, HttpStatus.OK);
-	}*/
 
 }
