@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.springsecurityexample.dto.CompanyDTO;
 import rs.ac.uns.ftn.springsecurityexample.dto.UserDTO;
 import rs.ac.uns.ftn.springsecurityexample.mapper.CompanyMapper;
+import rs.ac.uns.ftn.springsecurityexample.mapper.UserMapper;
 import rs.ac.uns.ftn.springsecurityexample.model.Company;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 import rs.ac.uns.ftn.springsecurityexample.service.UserService;
@@ -60,6 +61,10 @@ public class UserController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
-	
+	@GetMapping("/whoami")
+	public  ResponseEntity<UserDTO> getLoggedUser(Principal user) {
+		User loggedUser = this.userService.findByUsername(user.getName());
+		return new ResponseEntity<>(UserMapper.toDTO(loggedUser), HttpStatus.OK);
+	}
 
 }
