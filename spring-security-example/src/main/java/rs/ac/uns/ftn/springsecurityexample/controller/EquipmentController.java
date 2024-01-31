@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.springsecurityexample.dto.CompanyDTO;
@@ -31,8 +32,9 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService equipmentService;
 	
-	@GetMapping("/search/{name}/{companyId}")
-	public ResponseEntity<List<EquipmentDTO>> searchByName(@PathVariable String name, @PathVariable Long companyId) {
+	@GetMapping("/search")
+	public ResponseEntity<List<EquipmentDTO>> searchByName(@RequestParam(name = "name", defaultValue = "") String name,
+		    @RequestParam(name = "companyId") Long companyId) {
 		 List<Equipment> equipment = this.equipmentService.searchByNameAndCompanyId(name, companyId);
 		 List<EquipmentDTO> dtos = new ArrayList<>();
 		 for (Equipment e : equipment) {
@@ -41,7 +43,7 @@ public class EquipmentController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 	
-	@GetMapping("/search/{companyId}")
+	@GetMapping("/search1/{companyId}")
 	public ResponseEntity<List<EquipmentDTO>> searchByCompanyId(@PathVariable Long companyId) {
 		 List<Equipment> equipment = this.equipmentService.getAllByCompanyId(companyId);
 		 List<EquipmentDTO> dtos = new ArrayList<>();

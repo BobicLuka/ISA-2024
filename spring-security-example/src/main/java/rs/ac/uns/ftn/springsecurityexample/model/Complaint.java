@@ -34,7 +34,7 @@ public class Complaint {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", nullable = true)
 	private Company company;
-
+ 
 	public Long getId() {
 		return id;
 	}
