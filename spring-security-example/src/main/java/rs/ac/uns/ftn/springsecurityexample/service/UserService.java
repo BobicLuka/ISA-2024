@@ -12,4 +12,5 @@ public interface UserService {
 	User save(UserRequest userRequest);
 	boolean activateAccount(String activationCode);
 	User saveUser(User user);
+	List<User> getAllAdmins();
 }

@@ -121,4 +121,9 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.save(user);
 	}
 	
+	@Override
+	public List<User> getAllAdmins() {
+		return this.userRepository.findByRoles_Name("ROLE_ADMIN");
+	}
+	
 }
