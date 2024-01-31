@@ -14,6 +14,7 @@ import rs.ac.uns.ftn.springsecurityexample.model.Appointment;
 import rs.ac.uns.ftn.springsecurityexample.model.ComplaintResponse;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 
+
 @Service
 public class EmailService {
 
@@ -48,7 +49,7 @@ public class EmailService {
 			// Koristimo MimeMessageHelper kako bismo dodali prilog
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-			helper.setTo("kalargic@gmail.com");
+			helper.setTo(user.getEmail());
 			helper.setFrom(env.getProperty("spring.mail.username"));
 			helper.setSubject("QR code for your reservation");
 
