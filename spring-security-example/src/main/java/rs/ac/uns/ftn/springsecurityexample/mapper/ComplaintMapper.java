@@ -24,6 +24,15 @@ public class ComplaintMapper {
 			dto.setCompanyName(entity.getCompany().getName());
 		}
 
+		if (entity.getComplaintResponse() != null) {
+			dto.setComplaintResponseId(entity.getComplaintResponse().getId());
+			dto.setResponse(entity.getComplaintResponse().getResponse());
+			dto.setAdminWhoRespondedId(entity.getComplaintResponse().getSystemAdmin().getId());
+			dto.setAdminWhoRespondedName(entity.getComplaintResponse().getSystemAdmin().getFirstName() + " "
+					+ entity.getComplaintResponse().getSystemAdmin().getLastName());
+
+		}
+
 		return dto;
 	}
 }

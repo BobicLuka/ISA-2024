@@ -11,69 +11,73 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.springsecurityexample.model.Appointment;
+import rs.ac.uns.ftn.springsecurityexample.model.ComplaintResponse;
 import rs.ac.uns.ftn.springsecurityexample.model.User;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-    
-    @Autowired
-    private Environment env;
-    
-    @Autowired
-    private QrCodeService qrCodeService;
-    
-    public void sendActivationCode(User user) {
+	@Autowired
+	private JavaMailSender javaMailSender;
 
-       // System.out.println("Slanje emaila...");
+	@Autowired
+	private Environment env;
 
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(user.getEmail());
-        mail.setFrom(env.getProperty("spring.mail.username"));
-        mail.setSubject("Account activation");
+	@Autowired
+	private QrCodeService qrCodeService;
 
+	public void sendActivationCode(User user) {
 
-        String activationURL = "http://localhost:8080/api/activateAccount/"
-                + user.getActivationCode();
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setFrom(env.getProperty("spring.mail.username"));
+		mail.setSubject("Account activation");
 
-        mail.setText("Hello, " + user.getFirstName() + "! \n " +
-                     "To acctivate your account, please click the following link:\n" +
-                activationURL);
+		String activationURL = "http://localhost:8080/api/activateAccount/" + user.getActivationCode();
 
-        javaMailSender.send(mail);
-       // System.out.println("Email poslat!");
-    }
-    
-    public void sendQrCode(User user, Appointment appointment) {
+		mail.setText("Hello, " + user.getFirstName() + "! \n "
+				+ "To acctivate your account, please click the following link:\n" + activationURL);
 
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		javaMailSender.send(mail);
+	}
 
-        try {
-            // Koristimo MimeMessageHelper kako bismo dodali prilog
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+	public void sendQrCode(User user, Appointment appointment) {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
-            helper.setTo("kalargic@gmail.com");
-            helper.setFrom(env.getProperty("spring.mail.username"));
-            helper.setSubject("QR code for your reservation");
+		try {
+			// Koristimo MimeMessageHelper kako bismo dodali prilog
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-            helper.setText("Hello, " + user.getFirstName() + "! \n " +
-                    "Thank you for your reservation. QR code:\n");
-            
-            
-            // Generišemo QR kod kao niz bajtova
-            byte[] qrCodeBytes = qrCodeService.generateQrCode(appointment.getQrCodeData());
+			helper.setTo("kalargic@gmail.com");
+			helper.setFrom(env.getProperty("spring.mail.username"));
+			helper.setSubject("QR code for your reservation");
 
-            // Dodajemo QR kod kao prilog
-            helper.addAttachment("qrcode.png", new ByteArrayResource(qrCodeBytes), "image/png");
+			helper.setText("Hello, " + user.getFirstName() + "! \n " + "Thank you for your reservation. QR code:\n");
 
-        } catch (Exception e) {
-            // Handle exception
-            e.printStackTrace();
-        }
+			// Generišemo QR kod kao niz bajtova
+			byte[] qrCodeBytes = qrCodeService.generateQrCode(appointment.getQrCodeData());
 
-        javaMailSender.send(mimeMessage);
-    }
+			// Dodajemo QR kod kao prilog
+			helper.addAttachment("qrcode.png", new ByteArrayResource(qrCodeBytes), "image/png");
+
+		} catch (Exception e) {
+			// Handle exception
+			e.printStackTrace();
+		}
+
+		javaMailSender.send(mimeMessage);
+	}
+
+	
+	public void sendComplaintResponse(ComplaintResponse complaintResponse) {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(complaintResponse.getComplaint().getComplainant().getEmail());
+		mail.setFrom(env.getProperty("spring.mail.username")); // trebalo bi sa system_admin emaila
+		mail.setSubject("Complaint response");
+
+		mail.setText(complaintResponse.getResponse());
+
+		javaMailSender.send(mail);
+	}
 }
-

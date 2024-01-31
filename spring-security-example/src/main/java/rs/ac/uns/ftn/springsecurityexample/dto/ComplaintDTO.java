@@ -11,6 +11,12 @@ public class ComplaintDTO {
 	private Long companyId;
 	private String companyName;
 	
+	private Long complaintResponseId;
+	private String response;
+	private Long adminWhoRespondedId;
+	private String adminWhoRespondedName;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +64,30 @@ public class ComplaintDTO {
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public Long getComplaintResponseId() {
+		return complaintResponseId;
+	}
+	public void setComplaintResponseId(Long complaintResponseId) {
+		this.complaintResponseId = complaintResponseId;
+	}
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+	public Long getAdminWhoRespondedId() {
+		return adminWhoRespondedId;
+	}
+	public void setAdminWhoRespondedId(Long adminWhoRespondedId) {
+		this.adminWhoRespondedId = adminWhoRespondedId;
+	}
+	public String getAdminWhoRespondedName() {
+		return adminWhoRespondedName;
+	}
+	public void setAdminWhoRespondedName(String adminWhoRespondedName) {
+		this.adminWhoRespondedName = adminWhoRespondedName;
 	}
 
 }
